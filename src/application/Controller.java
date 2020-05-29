@@ -1,26 +1,30 @@
 package application;
 
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-//import javafx.scene.shape.RectangleBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.geometry.Point2D;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//import javafx.fxml.Initializable;
+
 import application.Modele;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
@@ -40,9 +44,6 @@ public class Controller implements Initializable{
 
 
 	private Modele modele;
-
-	@FXML 
-	private Button Delete;
 
 	@FXML 
 	private Button Clone;
@@ -65,41 +66,14 @@ public class Controller implements Initializable{
 	@FXML
 	private Pane Canvas;
 
-	//private Pane rectangle;
 
-	@FXML 
-	public void initialize1(URL location, ResourceBundle resources) {
-		//this.modele = new Modele(this);
-
-		//ici on permet d'avoir un seul RadioButton selectionne à la fois
+	@FXML
+	private Button Delete;
 
 
-		//peut se faire directement dans le sample.fxml
-		//Couleur.getItems().addAll(new MenuItem("rouge"),new MenuItem("vert"),new MenuItem("bleu"),new MenuItem("jaune"));
-		/*
-		RectangleListener = new EventHandler<ActionEvent>()
-				{
-			@Override
-			public void handle(ActionEvent event)
-			{	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 
-			}
-				};
-		}
-
-	buttonResetListener = new EventHandler<ActionEvent>()
-    {
-        @Override
-		public void handle(ActionEvent event) 
-		{
-
-		}*/
-
-
-
-		final Rectangle rect;
-		final Circle cercle;
-		final Line ligne;
 		final ToggleGroup group = new ToggleGroup();
 		Select.setToggleGroup(group);
 		Ellipse.setToggleGroup(group);
@@ -107,58 +81,178 @@ public class Controller implements Initializable{
 		Rectangle.setToggleGroup(group);
 
 
-		Ellipse.setOnAction(event -> Canvas.getChildren().add(new Circle(10,10,10)));
-		Rectangle.setOnAction(event-> Canvas.getChildren().add(new Rectangle (90,90)));
-		Line.setOnAction(event-> Canvas.getChildren().add(new Line(10,10,20,20)));
-		Clone.setOnAction(event -> Canvas.getChildren().addAll((new Circle(10,10,10)),(new Line(10,10,20,20)),(new Rectangle(90,90))));	
+		MenuItem m1 = new MenuItem("violet");
+		MenuItem m2 = new MenuItem("jaune");
+		MenuItem m3 = new MenuItem("bleu");
+		MenuItem m4 = new MenuItem("vert");
+		Couleur.getItems().add(m1);
+		Couleur.getItems().add(m2);
+		Couleur.getItems().add(m3);
+		Couleur.getItems().add(m4);
+
+		final String color;
+		Label colo = new Label("def");
+
+		m1.setOnAction((e) -> {
+
+			if (Select.isSelected()) {
+				Canvas.setStyle("-fx-background-color: #ff00ff");
+			}
+			else 
+			{System.out.println(false);}
+		});
+		m2.setOnAction((e) -> {
+			if (Select.isSelected()) {
+				Canvas.setStyle("-fx-background-color: #ffff00");
+			}
+			else 
+			{System.out.println(false);}
+		});
+
+		m3.setOnAction((e) -> {
+			if (Select.isSelected()) {
+				Canvas.setStyle("-fx-background-color: #0000ff");
+			}
+			else 
+			{System.out.println(false);}
+		});
+		m4.setOnAction((e) -> {
+			if (Select.isSelected()) {
+				Canvas.setStyle("-fx-background-color: #00ff00");
+			}
+			else 
+			{System.out.println(false);}
+		});
+
+
+
+		double xLoc;
+		double yLoc;
+
+		Ellipse.setOnAction(event -> Canvas.getChildren().add(createCircle(10,10,30, Color.WHITE)));
+		Rectangle.setOnAction(event-> Canvas.getChildren().add(createRectangle(200,200,Color.WHITE)));
+		Line.setOnAction(event-> Canvas.getChildren().add(createLine(10,10,30,50,Color.WHITE)));
+
+
+		Delete.setOnAction(event -> Canvas.getChildren().clear());  		 
+
 	}
 
-		@Override
-		public void initialize(URL arg0, ResourceBundle arg1) {
-			// TODO Auto-generated method stub
+	//permet de bouger les figures dans tous le canvas
+	double orgSceneX, orgSceneY;
 
-		}
-}
-		/*private void line(GraphicsContext gc) {
-		gc.beginPath();
-		gc.moveTo(100, 100);
-		gc.lineTo(150.5, 30.5);
-        gc.lineTo(150.5, 150.5);
-        gc.lineTo(30.5, 30.5);
-        gc.stroke();
-	}
-
-
-		//Clone.setOnAction(event -> Canvas.getChildren().add()...
-
-		if (Select.isSelected()) { //efface tout si on appuie sur select et delete
-			DeleteAll.setOnAction(event -> Canvas.getChildren().clear());   //supprime tous les elements du canvas...
-		}
-
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-	}
-public void CouleurModif() {
-		String nouvelleCouleur = String.format("%02x%02x%02x", null);
-		modifierCouleur(nouvelleCouleur);
-		Couleur.setStyle("-fx-backround-color:#"+nouvelleCouleur+";");
-
-	}
-
-	private void modifierCouleur(String nouvelleCouleur) {
+	public Circle createCircle(double i, double j, double r, Color color) {
 		// TODO Auto-generated method stub
-		Couleur.setText(""+nouvelleCouleur);
 
+		Circle circle = new Circle(i, j, r, color);
+
+		circle.setCursor(Cursor.HAND);
+
+
+		circle.setOnMousePressed((t) -> {
+
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY();
+
+			Circle c = (Circle) (t.getSource());
+			c.toFront();
+
+
+			c.setStroke(Color.RED);
+		});
+
+		circle.setOnMouseDragged((t) -> {
+			double offsetX = t.getSceneX() - orgSceneX;
+			double offsetY = t.getSceneY() - orgSceneY;
+
+			Circle c = (Circle) (t.getSource());
+
+			c.setCenterX(c.getCenterX() + offsetX);
+			c.setCenterY(c.getCenterY() + offsetY);
+
+
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY();
+		});
+
+		//decolore le tour lorsque la souris est lachee
+		circle.setOnMouseReleased((t) -> {
+			Circle c = (Circle) (t.getSource());
+			c.setStroke(null);
+		});
+
+
+		circle.getId();
+		return circle;
+	}
+
+	private Rectangle createRectangle(double i, double j, Color color) {
+		// TODO Auto-generated method stub
+		Rectangle rectangle = new Rectangle(i, j, color);
+
+		rectangle.setCursor(Cursor.HAND);
+
+		rectangle.setOnMousePressed((t) -> {
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY();
+
+			Rectangle R = (Rectangle) (t.getSource());
+			R.toFront();
+			R.setStroke(Color.RED);
+		});
+		rectangle.setOnMouseDragged((t) -> {
+			double offsetX = t.getSceneX() - orgSceneX;
+			double offsetY = t.getSceneY() - orgSceneY;
+
+			Rectangle R = (Rectangle) (t.getSource());
+
+			R.setX(R.getX() + offsetX);
+			R.setY(R.getY() + offsetY);
+
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY();
+		});
+		rectangle.setOnMouseReleased((t) -> {
+			Rectangle R = (Rectangle) (t.getSource());
+			R.setStroke(null);
+		});
+
+
+		return rectangle;
+	}
+
+	private Line createLine(double i, double j, double x, double y, Color color) {
+		// TODO Auto-generated method stub
+		Line line = new Line(i, j, x, y);
+
+		line.setCursor(Cursor.HAND);
+
+		line.setOnMousePressed((t) -> {
+
+
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY();
+
+			Line l = (Line) (t.getSource());
+			l.toFront();
+			l.setStroke(Color.RED);
+		});
+		line.setOnMouseDragged((t) -> {
+			double offsetX = t.getSceneX() - orgSceneX;
+			double offsetY = t.getSceneY() - orgSceneY;
+
+			Line l = (Line) (t.getSource());
+
+			l.setEndX(l.getEndX() + offsetX);
+			l.setEndY(l.getEndY() + offsetY);
+
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY();
+		});
+
+		return line;
 	}
 
 
+
 }
-
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-
-	}*/

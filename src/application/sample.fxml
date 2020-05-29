@@ -36,11 +36,6 @@
 				<MenuButton fx:id="Couleur" cache="true" layoutX="18.0"
 					layoutY="281.0" text="Couleur">
 					<items>
-						<MenuItem mnemonicParsing="false" text="rouge" />
-						<MenuItem mnemonicParsing="false" text="bleu" />
-						<MenuItem mnemonicParsing="false" text="jaune" />
-						<MenuItem mnemonicParsing="false" text="vert" />
-						<MenuItem mnemonicParsing="false" text="noir" />
 					</items>
 				</MenuButton>
 				<Separator layoutX="113.0" layoutY="3.0"
@@ -51,6 +46,7 @@
 					prefWidth="124.0" />
 				<Separator layoutY="328.0" prefHeight="4.0"
 					prefWidth="124.0" />
+				<Pane layoutX="115.0" BorderPane.alignment="CENTER" prefHeight="500.0" prefWidth="600.0" fx:id="Canvas"/>
 				
 			</children>
 		</Pane>
