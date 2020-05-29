@@ -1,0 +1,18 @@
+Model MVC
+
+Structurer le code en 3 classes principale: 
+
+Vue: Représente l'interface graphique, elle est compsée de deux "sous vue" : une vue pour les commandes et une vue pour le canvas .
+La vue doit contenir une référence vers un controler (Controleur ctrl = new Controleur(modele);)
+
+
+Model: contient le code des fonctions de l'application
+	   - dessiner rectangle
+	   - dessiner cercle 
+	   - dessiner trait
+	   
+	   - definir la couleur 
+	   - definir la taille 
+
+
+Controller: fait le lien entre le model et la vue. a la détection d'une action, il appelle les méthodes définie dans le modèle.

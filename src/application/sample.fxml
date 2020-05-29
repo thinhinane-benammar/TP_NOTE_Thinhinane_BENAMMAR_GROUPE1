@@ -22,7 +22,7 @@
 				<Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE"
 					strokeWidth="0.0" text="Options" />
 				<RadioButton fx:id="Select" layoutX="13.0"
-					layoutY="94.0" mnemonicParsing="false" text="Select/Move" />
+					layoutY="94.0" mnemonicParsing="false" text="Select/Move"/>
 				<RadioButton fx:id="Ellipse" layoutX="13.0"
 					layoutY="157.0" mnemonicParsing="false" text="Ellipse" />
 				<RadioButton fx:id="Rectangle" layoutX="13.0"
