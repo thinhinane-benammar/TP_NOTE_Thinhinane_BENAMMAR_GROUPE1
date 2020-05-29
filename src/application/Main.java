@@ -25,20 +25,10 @@ public class Main extends Application {
 	        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 	        primaryStage.setTitle("Graphique Editor");
 	        primaryStage.setScene(new Scene(root, 800, 500));
-	//        primaryStage.show();
-	        
-	        
-	        
-	        Circle cercle = new Circle();
-	        cercle.setCenterX(300);//réglage de la position, de la taille et de la couleur du cercle
-	        cercle.setCenterY(200);
-	        cercle.setRadius(100);
-	       // cercle.setFill(Color.YELLOW);
-	        //cercle.setStroke(Color.ORANGE);//réglage de la couleur de la bordure et de son épaisseur
-	        cercle.setStrokeWidth(5);
-	        
-	        root.getChildrenUnmodifiable().add(cercle);//on ajoute le cercle au groupe root
 	        primaryStage.show();
+	        
+	        
+	    
 	        
 	    }
 	
